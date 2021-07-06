@@ -10,7 +10,9 @@ import { pageInfo } from '../../store/actions/UserActions';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 
+
 const stripePromise = loadStripe('pk_test_51J7Lu3F4TDOSFmXihWdyjEQ3VJ0MLS7boJTvBijeu8C9P0ejskQDuJQxHDcsCJ9MNLND0ObKTbrqaAyhPeaQpVEO00BL2eA2D9');
+const stripea = require("stripe")('sk_test_51J7Lu3F4TDOSFmXimwUKoYYxwZpPK0u6ekShlB78qEKw1vdfp1sBUvSWepu7lGBbX3u2UXvW4gstk1D3eLG6aR1Q00jrglhqPy');
 
 function CartPage() {
     const products = useSelector(state => state.product.products);
@@ -37,11 +39,8 @@ function CartPage() {
 
         const stripe = await stripePromise;
         // Send To Backend
-
         try {
-            // const checkoutSession = await fetch('http://localhost:4000/payment', {
-            // const checkoutSession = await fetch('https://e-commerce-shopping-1.herokuapp.com/payment', {
-            const checkoutSession = await fetch('https://first-app-shopping.herokuapp.com/payment', {
+            const checkoutSession = await fetch('http://localhost:4000/payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,10 +52,11 @@ function CartPage() {
                 })
             });
             const response = await checkoutSession.json();
-            console.log(response.id);
+
             const redirect = await stripe.redirectToCheckout({
                 sessionId: response.id
             });
+
         } catch(error) {
             alert(error.message);
         }

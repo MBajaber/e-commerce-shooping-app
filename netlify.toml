@@ -1,9 +1,0 @@
-[build]
-    base = "/"
-    publish = "clients/build/"
-    command = "yarn run build"
-    functions = "index.js"
-[[redirects]]
-    form = "/*"
-    to = "/index.html"
-    status = 200

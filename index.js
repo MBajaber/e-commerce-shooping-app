@@ -35,24 +35,18 @@ app.post("/payment", cors(), async (req, res) => {
     },
     line_items: transformedItems,
     mode: 'payment',
-    success_url: '/success_payment',
-    cancel_url: '/fail_payment',
+    success_url: 'http://localhost:3000/success_payment',
+    cancel_url: 'http://localhost:3000/fail_payment',
     metadata: {
       email,
-      images: JSON.stringify(products.map(item => item.image))
+      images: JSON.stringify(products.map(item => item.image)),
     }
   });
-
+  
   res.json({ id: session.id })
 });
 
 app.use(cors());
-
-// app.use(cors({
-//   origin:'http://localhost:3000', 
-//   credentials:true,
-//   optionSuccessStatus:200
-// }));
 
 app.listen(process.env.PORT || 4000, () => console.log("Server Start"));
 
